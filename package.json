@@ -1,0 +1,16 @@
+{
+  "name": "github-contrib-wall",
+  "version": "1.0.0",
+  "description": "Testing if GitHub contribution wall can be changed by editing git history. Spoiler alert: Yes... yes it can.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gordan Nekić",
+  "license": "ISC",
+  "dependencies": {
+    "luxon": "^3.3.0"
+  }
+}
