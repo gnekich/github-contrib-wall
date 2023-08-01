@@ -4,6 +4,8 @@
 git config user.email "gordan@neki.ch"
 git config user.name "Gordan Nekić"
 
+# Fetch remote branches
+git fetch --all
 # Checkout to the feat/code branch where we have all code content.
 git checkout feat/code
 # Delete main branch locally
