@@ -1,5 +1,8 @@
 name: Create our Daily git History
 on:
+  push:
+    branches:
+      - feat/code # Whenever there is a commit to feat/code a new run should be done.
   schedule:
     - cron: "0 0 * * *"
   # Allows you to run this workflow manually from the Actions tab
@@ -16,6 +19,8 @@ jobs:
     steps:
       # Important we need to checkout to have files of the repo ready
       - uses: actions/checkout@v3
+        with:
+          ref: "feat/code" # Branch for checkout
       - name: "Sanity checks"
         run: pwd && ls -la
       - name: Use Node.js 18.x
@@ -25,6 +30,9 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm start
+        env:
+          POINTS_TO_PAINT: "[0,0,4,4,0,0,0,0,4,4,4,4,0,0,0,0,4,4,4,4,0,0,4,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,4,4,4,0,0,0,0,4,4,4,4,0,0,4,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,4,4,4,0,0,0,0,4,4,4,4,0,0,4,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,4,4,4,0,0,0,0,4,4,4,4,0,0,4,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,4,4,4,0,0,0,0,4,4,4,4,0,0,4,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,4,4,4,0,0,0,0,4,4,4,4,0,0,4,4,4,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,1,1,4,0,0,0,0,4,1,1,4,0,0,4,0,0,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,4,0,0,4,0,0,0,0,4,0,0,4,0,0,4,0,0,4,0,0,0,0,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]"
+          POINT_BASE_VALUE: 1
       - name: "Call a Bash Script - Painter"
         run: bash ${GITHUB_WORKSPACE}/painter.sh
 
