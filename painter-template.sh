@@ -23,3 +23,6 @@ git add brush
 
 # Push the new data to main branch.
 git push -u -f origin main
+
+# Return back to base code branch (used for local testing to not forget going back)
+git checkout feat/code

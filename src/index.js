@@ -33,7 +33,7 @@ const pointsToPaint = parsedPointsToPaintFromEnv ?? [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 4, 0,
   0, 4, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0,
+  0,
 ];
 
 if (!Array.isArray(pointsToPaint)) {
@@ -50,17 +50,25 @@ const baseValue = process.env.POINT_BASE_VALUE
 // --- Time logic start ---
 // Init the start date
 const TODAY = DateTime.local();
-const START_DAY = TODAY.minus({ days: pointsToPaint.length - 1 })
-  .startOf("week")
-  .minus({ days: 1 });
+
+const REF = TODAY.minus({ days: pointsToPaint.length - 1 });
+const START_DAY =
+  TODAY.weekday === 7 // Get the day of the week. 1 is Monday and 7 is Sunday
+    ? REF.startOf("day")
+    : REF.startOf("week").minus({ days: 1 });
 
 // We need this because last line can be
 const diffInDaysOfStartDayAndToday =
   parseInt(TODAY.diff(START_DAY, ["days"])?.days, 10) ?? 0;
 
 // Some sanity check in the logs
-console.log("TODAY", TODAY.toISOTime());
-console.log("START_DAY", START_DAY.toISOTime());
+console.log("TODAY", TODAY.toISODate(), TODAY.toISOTime(), TODAY.weekday);
+console.log(
+  "START_DAY",
+  START_DAY.toISODate(),
+  START_DAY.toISOTime(),
+  START_DAY.weekday // Get the day of the week. 1 is Monday and 7 is Sunday
+);
 console.log("diffInDaysOfStartDayAndToday", diffInDaysOfStartDayAndToday);
 console.log("size of commits array", pointsToPaint.length);
 
